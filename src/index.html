@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Sansita+Swashed:wght@300..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Sacramento&family=Titan+One&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="./style.css">
+    <title>Pet2place</title>
+    <style>
+     .hide {
+    display: none; 
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title-area">
+      <div class= "logo-area">
+        <spam class="image-wrapper">
+      <img class="logo-image" src="./images/placesImage.png"/>
+      </spam>
+      <p class="title">Pet2Place</p>
+      </div>
+      </div>
+
+      <div class="intro-area" >
+        <i>Discover places located in your pets country of origin, and also discover a collection of captivating images with your API Key <a href="#myAPI">"HERE"</a></i>
+      </div>
+
+      <div class="pet-area">
+
+        <div class="pet-selection-area" id="breedSelection">
+        <div class="cat-area">
+          <img class="cat-image" src="./images/catImage.png"/>
+        <p class="cat-area-label">Select a Cat breed</p>
+    <select class="cat-breed-select"></select>
+    </div>
+
+    <nav>
+      <ul class="nav-list">
+        <li><a href="#petInfo" class="nav-item">Pet Info</a></li>
+        <li><a href="#placeInfo" class="nav-item">Place Info</a></li>
+        <li><a href="#myAPI" class="nav-item">API Info</a></li>
+      </ul>
+    </nav>
+
+    <div class="dog-area">
+         <img class="dog-image" src="./images/dogImage.png"/>
+      <p class="dog-area-label">Select a Dog breed</p>
+    <select class="dog-breed-select"></select>
+    </div>
+        </div>
+
+        <div class="pet-info" id="petInfo">
+          
+          <div class="pet-details">
+           <p class="pet-info-title">Pet Info</p>
+           <div class="pet-bio">
+            <a href="#breedSelection" class="pet-bio-link">Select a Pet Breed</a>
+           </div>
+          </div>
+        </div>
+
+        <div class="place-info" id="placeInfo">
+          
+          <div class="place-details">
+           <p class="place-info-title">Place Info</p>
+           <div class="place-table-wrapper" id="placeDetails">
+            <a href="#breedSelection" class="place-alt-link">Select a Pet Breed</a>
+            
+           </div>
+          </div>
+        </div>
+
+        <div class="api-info" id="myAPI">
+          <div class="api-details">
+            <p class="api-info-title">API Info</p>
+           <div class="api-table-wrapper">
+
+            <div class="api-gen-table-wrapper">
+            <table class="api-gen-table" style="border-collapse: collapse;">
+              <caption style="color: #8B0000; border: 1px solid #8B0000; font-weight: 700; font-size: 20px;">Create your API Key</caption>
+              <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">API KEY NAME:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px;"><input class="keyName" title="Enter Key Name" placeholder="Enter Key Name" style="background-color: #f1dbba; color: #8B0000; font-size: 14px; border: none; font-family: Comic Sans MS; font-weight: 700;"/></td>
+              </tr>
+              <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">CUSTOM ACCOUNT ID:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px"><input class="keyId" title="Enter Custom Account ID" placeholder="Enter Custom Account ID" style="background-color: #f1dbba; color: #8B0000; font-size: 14px; border: none; font-family: Comic Sans MS; font-weight: 700"/></td>
+              </tr>
+              <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">CUSTOM META DATA:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px"><input class="keyMetaData" title="Enter Custom Meta Data" placeholder="Enter Custom Meta Data" style="background-color: #f1dbba; color: #8B0000; font-size: 14px; border: none; font-family: Comic Sans MS; font-weight: 700"/></td>
+              </tr>
+            </table>
+            <button class="api-gen-table-wrapper-button" style="padding: 10px 5px; background-color: rgb(240, 164, 65); border-radius: 20px; font-family: Comic Sans MS; font-weight: 700; border: 1px solid #8B0000; color: #8B0000; cursor: pointer;">Create API Key</button>
+            </div>
+
+
+
+            <div class="api-view-table-wrapper"></div>
+            <div class="api-use-table-wrapper">
+                  <table class="api-gen-table" style="border-collapse: collapse;">
+              <caption style="color: #8B0000; border: 1px solid #8B0000; font-weight: 700; font-size: 20px;">Use your API Key</caption>
+              <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">API ENDPOINT:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px;">https://pet2place-backend-12a6.onrender.com/api/images/getImages</td>
+              </tr>
+              <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">x-api-key:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px"><input class="keyValue" title="Enter Api Key" placeholder="Enter Api Key" style="background-color: #f1dbba; width: 100%; color: #8B0000; font-size: 14px; border: none; font-family: Comic Sans MS; font-weight: 700"/></td>
+              </tr>
+              <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">REQUEST METHOD:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px">GET</td>
+              </tr>
+               <tr>
+                <th style="color: #8B0000; text-align: left; border: 1px solid #8B0000; font-weight: 700;">REMARK:</th>
+                <td style="color: #8B0000; text-align: left; border: 1px solid #8B0000; padding: 5px">Feel free to try it out on Postman, also check out the json response in your browser console</td>
+              </tr>
+            </table>
+            <button class="api-use-table-wrapper-button" style="padding: 10px 5px; background-color: rgb(240, 164, 65); border-radius: 20px; font-family: Comic Sans MS; font-weight: 700; border: 1px solid #8B0000; color: #8B0000; cursor: pointer;">Get Images</button>
+            </div>
+            <div class="image-gallery-wrapper">
+             <ul class="image-gallery">
+
+             </ul>
+            </div>
+         
+            
+            
+           </div>
+          </div>
+        </div>
+
+
+    </div>
+    </div>
+
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
