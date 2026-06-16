@@ -17,3 +17,39 @@ export function fetchDogByBreed(id) {
     },
   });
 }
+
+export const fetchStats = async name => {
+  try {
+    const response = await fetch(
+      `https://api.api-ninjas.com/v1/dogs?name=${name}`,
+      {
+        method: 'GET',
+        headers: {
+          'x-api-key': 'gdvQqEx3KBpR51ZfOeJgIA==10aHi9pat7JXS0OQ',
+        },
+      }
+    );
+    const facts = await response.json();
+    console.log(facts);
+    return facts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*export const fetchStats = async name => {
+  try {
+    const response = await axios.get(
+      `https://api.api-ninjas.com/v1/dogs?name=${name}`,
+      {
+        headers: {
+          'x-api-key': 'gdvQqEx3KBpR51ZfOeJgIA==10aHi9pat7JXS0OQ',
+        },
+      }
+    );
+    const facts = await response.data;
+    return facts;
+  } catch (error) {
+    console.error(error);
+  }
+};*/
