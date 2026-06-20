@@ -31,6 +31,7 @@ placeTableHead.innerHTML = `<tr>
 const placeTableBody = document.createElement('tbody');
 const placeDetails = document.createElement('div');
 
+
 placeArea.style.display = 'none';
 placeArea.style.width = '100%';
 placeArea.style.height = '100%';
@@ -202,8 +203,7 @@ function breedEventListener(selector) {
                 placeTable.style.padding = '10px';
                 placeTable.style.borderRadius = '10px';
                 placeTable.style.backgroundColor = '#FFD369';
-                placeTable.style.color = '#49e2e6';
-                placeTable.style.color = '535px';
+               
                 placeArea.style.alignItems = 'start';
                 placeArea.style.justifyContent = 'space-between';
                 placeTable.style.height = '300px';
@@ -243,8 +243,8 @@ function breedEventListener(selector) {
                   placeTableBody.innerHTML = foundPlaces;
                 } else {
                   placeTableBody.innerHTML = `<tr>
-                                  <td style="color: #49e2e6; text-align: center; border: 1px solid #ffff;">Null</td>
-                                  <td style="color: #49e2e6; text-align: center; border: 1px solid #ffff;">Null</td>
+                                  <td style="color: #1f6b3a; text-align: center; border: 1px solid green;">Null</td>
+                                  <td style="color: #1f6b3a; text-align: center; border: 1px solid green;">Null</td>
                                   </tr>
       `;
                 }
@@ -854,66 +854,7 @@ countrySelector.addEventListener('change', event => {
        
      })
 
-/*
-apiGenTableButton.addEventListener("click", async () => {
-  if ((keyName.value.trim() === "" || keyId.value.trim() === "" || keyMetaData.value.trim() === "")) {
-    Notiflix.Notify.warning('All feilds are required!');
-    return
-  }
-  Notiflix.Loading.hourglass('Creating Api Key, please wait...');
-  try {
-    const key = await createApiKey(
-      keyName.value.trim(),
-      keyId.value.trim(),
-      keyMetaData.value.trim()
-    );
-    localStorage.setItem('myApiKey', JSON.stringify(key));
-    Notiflix.Loading.remove();
-    Notiflix.Notify.success('API Key created and stored successfully!');
-    keySideEffects();
-  } catch (error) {
-    Notiflix.Loading.remove();
-    Notiflix.Notify.failure('Failed to create API Key');
-    console.error('Error creating API key:', error);
-  }
-});
 
-
-apiUseTableButton.addEventListener("click", async() => { 
-  if (keyValue.value.trim() === "") {
-   Notiflix.Notify.warning('Enter Api Key!');
-   return;
-  }
-  Notiflix.Loading.hourglass('Getting Images, please wait...');
-  
- try {
-    const Images = await getImages(keyValue.value.trim());
-    console.log('Images aquired:', Images);
-   apiDetailsArea.style.height = "fit-content";
-    const myImages = Images
-      .map(Image => {
-        return `
-        <li style="width: 370px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #ffd369; color: rgb(15, 76, 117); padding: 10px; border: 1px solid #ffff; border-radius: 10px;"><img src=${Image.link} style="width: 300px; height: 300px; border: 1px solid #ffff;"/> 
-        <span>${Image.name}</span></li>
-        `;
-      })
-     .join('');
-   
-   imageGallery.style.border = '1px solid #ffff';
-   imageGallery.style.padding = '20px';
-   imageGallery.style.borderRadius = '20px';
-   imageGallery.innerHTML = myImages;
-
-    Notiflix.Loading.remove();
-    Notiflix.Notify.success('View response in your browser console!');
-  } catch (error) {
-    Notiflix.Loading.remove();
-    Notiflix.Notify.failure('Failed to get Images');
-    console.error('Error getting Images:', error);
-  }
-
-});
-*/
 
 
 
