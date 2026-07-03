@@ -6,12 +6,14 @@ import { findFlag } from './country-flag.js';
 import { findInfo } from './country-info.js';
 import { fetchCatBreeds } from './cat-api.js';
 import { fetchDogBreeds, fetchStats } from './dog-api.js';
+import aquiredDogs from './acquiredDogs.json'
 
 
 import Countries from './countries_sorted_alphabetical.json';
 
 
-const countryFlagImageWrapper = document.querySelector('.countryFlagWrapper');
+const dogBreedImage = document.querySelector('.dogBreedImage');
+dogBreedImage.style.padding = '10px';
 const topCountryFlagImageWrapper = document.querySelector('.topCountryFlagWrapper');
 
 const countrySelector = document.querySelector('.country-select');
@@ -131,7 +133,7 @@ function renderCountryOptions(selector, countries, Instruction) {
    });
  }
 
-function renderDogBreeds(selector, users) {
+function renderDogBreeds(selector, breeds) {
   const placeholder = document.createElement('option');
   placeholder.setAttribute('disabled', '');
   placeholder.setAttribute('selected', 'selected');
@@ -140,15 +142,15 @@ function renderDogBreeds(selector, users) {
   placeholder.style.fontWeight = 'bold';
   selector.append(placeholder);
 
-  users.forEach(breed => {
-    if (breed.country_code) {
+  breeds.forEach(breed => {
+    
       const dogOption = document.createElement('option');
       dogOption.setAttribute('value', breed.name);
       dogOption.textContent = breed.name;
       dogOption.style.fontWeight = '700';
       dogOption.style.color = '#1f6b3a';
       selector.append(dogOption);
-    }
+    
   });
 }
 
@@ -167,13 +169,18 @@ function breedEventListener(selector) {
     Notiflix.Loading.hourglass('Loading data, please wait...');
     console.log(event.target.value)
     selectedBreedName = event.target.value;
+    aquiredDogs.map((dog) => {
+      if (selectedBreedName === dog.name) {
+        dogBreedImage.innerHTML = `<img src="${dog.image_link}" alt='Dog Breed' style="height: 200px">`;
+      }
+    })
     fetchStats(event.target.value)
       .then(facts => {
         if (facts.length === 0) {
           Notiflix.Notify.failure(
             `Data on ${event.target.value} is not available yet.`
           );
-           
+          Notiflix.Loading.remove();
         }
         selectedBreed = facts;
         return selectedBreed;
@@ -254,7 +261,7 @@ function breedEventListener(selector) {
                 //errorMsg.classList.remove('hide');
                 Notiflix.Loading.remove();
                 Notiflix.Notify.failure(
-                  'Oops! Something went wrong! Try reloading the page!'
+                  'Oops! Something went wrong! Select Breed again!'
                 );
                 event.target.value = '';
                 console.error(`Error message ${error}`);
@@ -545,121 +552,15 @@ articleSelector(articleEighteenButton);
 
 renderCountryOptions(countrySelector, Countries, 'Choose a country');
 
-Notiflix.Loading.hourglass('Loading Dog Breeds, please wait...');
 
- fetchDogBreeds()
-   .then(response => {
-     if (!response.ok) {
-       throw new Error(`HTTP error! Status: ${response.status}`);
-     }
-
-     return response.json();
-   })
-   .then(breeds => {
-     Notiflix.Loading.remove();
-     dogBreeds = breeds;
+     dogBreeds = aquiredDogs;
      //console.log(dogBreeds);
      renderDogBreeds(breedSelector, dogBreeds);
 
      
-   })
-   .catch(error => {
-     Notiflix.Loading.remove();
-     Notiflix.Notify.failure('Cannot find Dog Breeds!');
-
-     console.error(`Error message ${error}`);
-   });
-
-breedEventListener(breedSelector);
    
 
-
-
-
-
-
-
-
-/*
-const apiGenTable = document.querySelector('.api-gen-table-wrapper');
-
-const apiViewTable = document.querySelector('.api-view-table-wrapper');
-
-const apiUseTable = document.querySelector('.api-use-table-wrapper');
-
-apiUseTable.style.display = "none";
-
-
-const keySideEffects = () => {
-  if (JSON.parse(localStorage.getItem('myApiKey'))) {
-    const keyDetails = JSON.parse(localStorage.getItem('myApiKey'));
-    apiGenTable.style.display = 'none';
-
-    const userLocale = navigator.language; // e.g., "en-US" or "fr-FR"
-    const myDate = new Date(keyDetails.createdAt);
-
-    const formatter = new Intl.DateTimeFormat(userLocale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit', // Optional: include seconds
-      hour12: true, // Optional: use 12-hour clock (set to false for 24-hour clock)
-    });
-    const createdDate = formatter.format(myDate);
-
-    apiViewTable.innerHTML = `
-     <table class="api-view-table" style="border-collapse: collapse; background-color: #ffd369; border: 1px solid #ffff;">
-              <caption style="color: rgb(15, 76, 117); font-family: Sacramento; background-color: #ffd369; font-size: 35px; border: 1px solid #ffff; font-weight: 700;">View your API Details</caption>
-              <tr>
-                <th style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff; font-weight: 700;">API KEY NAME:</th>
-                <td style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff;">${keyDetails.name}</td>
-              </tr>
-              <tr>
-                <th style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff; font-weight: 700;">API KEY:</th>
-                <td style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff;">${keyDetails.key}</td>
-              </tr>
-              <tr>
-                <th style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff; font-weight: 700;">CUSTOM ACCOUNT ID:</th>
-                <td style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff;">${keyDetails.customAccountId}</td>
-              </tr>
-
-              <tr>
-                <th style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff; font-weight: 700;">CUSTOM METADATA:</th>
-                <td style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff;">${keyDetails.customMetaData.metadata_val}</td>
-              </tr>
-
-              <tr>
-                <th style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff; font-weight: 700;">CREATED AT:</th>
-                <td style="color: rgb(15, 76, 117); text-align: left; border: 1px solid #ffff;">${createdDate}</td>
-              </tr>
-            </table>
-  `;
-    
-apiUseTable.style.display = 'flex';
-  }
-}
-
-keySideEffects();
-
-
-
-const keyName = document.querySelector('.keyName');
-const keyId = document.querySelector('.keyId');
-const keyMetaData = document.querySelector('.keyMetaData');
-
-const apiGenTableButton = document.querySelector('.api-gen-table-wrapper-button');
-
-const apiUseTableButton = document.querySelector(".api-use-table-wrapper-button");
-
-const keyValue = document.querySelector('.keyValue');
-
-const imageGallery = document.querySelector('.image-gallery');
-
-const apiDetailsArea = document.querySelector('.api-details');
-*/
-
+breedEventListener(breedSelector);
 
 
 
@@ -675,13 +576,19 @@ window.selectPlace = (event) => {
   const id = event.currentTarget.getAttribute('data-id');
   myPlaceObj = placesArray.find(place => place.id === id);
   Notiflix.Loading.hourglass('Getting weather details');
-  getWeather(myPlaceObj.geometry.coordinates[1], myPlaceObj.geometry.coordinates[0])
-    .then((response) => {
+  getWeather(
+    myPlaceObj.geometry.coordinates[1],
+    myPlaceObj.geometry.coordinates[0]
+  )
+    .then(response => {
       Notiflix.Loading.remove();
-      return response.json()
+      return response.json();
     })
-    .then((weatherDetails) => {
-    const suitabilityDetails = generateParkSuitabilityScore(weatherDetails, selectedBreed);
+    .then(weatherDetails => {
+      const suitabilityDetails = generateParkSuitabilityScore(
+        weatherDetails,
+        selectedBreed
+      );
       const mySelectedCountry = Countries.find(
         country => country.alpha_2 === selectedCountry
       );
@@ -797,13 +704,17 @@ window.selectPlace = (event) => {
                          </div>
                          </div>`;
     })
-  
+    .catch(error => {
+      Notiflix.Loading.remove();
+      Notiflix.Notify.failure('Error, select place again!');
+      console.error(`Error message ${error}`);
+    });
 }
 
 countrySelector.addEventListener('change', event => {
   
   selectedCountry = event.target.value;
-  countryFlagImageWrapper.style.display = 'block';
+  dogBreedImage.style.display = 'block';
   topCountryFlagImageWrapper.style.display = 'block';
   placeTable.style.display = 'none';
   placeDetails.style.display = 'none';
@@ -827,7 +738,6 @@ countrySelector.addEventListener('change', event => {
       Notiflix.Loading.remove();
       //console.log(res);
       countryFlag = res;
-      countryFlagImageWrapper.innerHTML = `<img src="${countryFlag.rectangle_image_url}" alt='Country flag' style="height: 200px">`;
       topCountryFlagImageWrapper.innerHTML = `<img src="${countryFlag.rectangle_image_url}" alt='Country flag' style="height: 200px">`;
       Notiflix.Notify.success('Country Information retreived');
       countryDogBreeds = dogBreeds.filter(
